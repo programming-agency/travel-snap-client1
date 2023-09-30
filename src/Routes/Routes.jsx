@@ -10,6 +10,10 @@ import Login from "../Pages/Shared/Login/Login";
 import Destination from "../Pages/Destination/Destination";
 import Contact from "../Pages/Contact/Contact";
 import Premium from "../Pages/Premium/Premium";
+import Write from "../Pages/write/Write";
+import Payment from "../Pages/Premium/Payment";
+import AboutMe from "../Components/AboutMe/AboutMe";
+ 
 
 const router = createBrowserRouter([
     {
@@ -24,6 +28,10 @@ const router = createBrowserRouter([
                 path: '/about',
                 element: <About />
             },
+            {
+                path: '/aboutme',
+                element: <AboutMe />
+            },
 
             {
                 path: '/destination',
@@ -34,8 +42,16 @@ const router = createBrowserRouter([
                 element: <Contact />
             },
             {
+                path: '/write',
+                element: <Write />
+            },
+            {
                 path: '/premium',
                 element: <Premium />
+            },
+            {
+                path: '/payment',
+                element: <Payment />
             },
             {
                 path: '/register',

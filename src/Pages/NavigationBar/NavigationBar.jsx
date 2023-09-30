@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 export default function NavigationBar() {
 
+
     const navOption =
         <>
             <li><Link to='/'>Home</Link></li>
@@ -27,12 +28,18 @@ export default function NavigationBar() {
                 </div>
                 <a className="btn btn-ghost normal-case text-xl">Travel Snap</a>
             </div>
-            <div className="navbar-end hidden lg:flex">
+            <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
+                    <div>
+                    </div>
                     {navOption}
                 </ul>
             </div>
-             
+            <div className="navbar-end">
+                <div className="form-control">
+                    <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
+                </div>
+            </div>
         </div>
     )
 }
