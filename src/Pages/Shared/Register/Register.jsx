@@ -16,7 +16,7 @@ export default function Register() {
     const user = { userName, email, photo, pass }
     console.log(user)
     try {
-      const data = await axios.post("http://localhost:8908/api/register", user);
+      const data = await axios.post("http://localhost:5000/api/register", user);
       console.log(data)
       if (data.status === 200) {
         // updateUser(data.data.user);

@@ -2,11 +2,11 @@ import React, { useContext } from 'react'
 import { useState } from 'react';
 import { Link, useNavigate, } from 'react-router-dom';
 import axios from "axios";
- 
+
 
 
 export default function Login() {
- 
+
   const navigate = useNavigate();
   const [email, setEmail] = useState("")
   const [pass, setPass] = useState("")
@@ -18,7 +18,7 @@ export default function Login() {
     const user = { email, pass }
     console.log(user)
     try {
-      const data = await axios.post("http://localhost:8908/api/login", { email, pass });
+      const data = await axios.post("http://localhost:5000/api/login", { email, pass });
       console.log(data)
       if (data.status === 200) {
         // alert(data.data.msg);
