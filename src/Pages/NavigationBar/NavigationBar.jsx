@@ -1,30 +1,30 @@
 import React, { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 export default function NavigationBar() {
 
+    const location = useLocation()
     const navigate = useNavigate()
     const [user, setUser] = useState();
 
-    console.log(user);
+    // console.log(user);
 
     const handleLogOut = () => {
-        // logOut()
         localStorage.clear();
-        navigate('/login')
+        navigate('/')
         // console.log("btn click");
     }
 
     const navOption =
         <>
-            {user && <li><Link to='/home'>Home</Link></li>}
-
+            <li><Link to='/home'>Home</Link></li>
             <li><Link to='/about'>About us</Link></li>
             <li><Link to='/destination'>Destination</Link></li>
             <li><Link to='/contact'>Contact Us</Link></li>
             <li><Link to='/premium'>Premium</Link></li>
             {/* <li><Link to='/login'>Login</Link></li> */}
         </>
+
 
 
     useEffect(() => {

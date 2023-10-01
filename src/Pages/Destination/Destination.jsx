@@ -1,4 +1,3 @@
-
 import Box from '@mui/material/Box';
 import Tab from '@mui/material/Tab';
 import TabContext from '@mui/lab/TabContext';
@@ -10,7 +9,6 @@ import { FiMapPin, FiMessageSquare } from 'react-icons/fi';
 export default function Destination() {
 
     const [countrys, setCountrys] = useState([])
-    // const [filterCountrys, setFilterCountrys] = useState([])
 
     useEffect(() => {
         fetch('/countryData.json')
@@ -27,7 +25,7 @@ export default function Destination() {
     const Africa = countrys.filter(item => item.location === "Africa")
 
 
-    console.log(SouthAmerica);
+    // console.log(SouthAmerica);
 
     const [value, setValue] = useState('1');
 
@@ -63,7 +61,7 @@ export default function Destination() {
                             {
                                 SouthAmerica.map((country, index) => (
                                     <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]'src={country.image} alt="Shoes" /></figure>
+                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
                                         <div className="card-body">
                                             <h1>{country.date}</h1>
                                             <h2 className="card-title">
@@ -86,7 +84,7 @@ export default function Destination() {
                             {
                                 NorthAmerica.map((country, index) => (
                                     <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]'src={country.image} alt="Shoes" /></figure>
+                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
                                         <div className="card-body">
                                             <h1>{country.date}</h1>
                                             <h2 className="card-title">
@@ -110,7 +108,7 @@ export default function Destination() {
                             {
                                 Europe.map((country, index) => (
                                     <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]'src={country.image} alt="Shoes" /></figure>
+                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
                                         <div className="card-body">
                                             <h1>{country.date}</h1>
                                             <h2 className="card-title">
@@ -135,7 +133,7 @@ export default function Destination() {
                             {
                                 Africa.map((country, index) => (
                                     <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]'src={country.image} alt="Shoes" /></figure>
+                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
                                         <div className="card-body">
                                             <h1>{country.date}</h1>
                                             <h2 className="card-title">
@@ -160,7 +158,7 @@ export default function Destination() {
                             {
                                 Asia.map((country, index) => (
                                     <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]'src={country.image} alt="Shoes" /></figure>
+                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
                                         <div className="card-body">
                                             <h1>{country.date}</h1>
                                             <h2 className="card-title">

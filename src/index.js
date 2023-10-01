@@ -8,13 +8,14 @@ import {
 import reportWebVitals from './reportWebVitals';
 import router from './Routes/Routes';
 import AuthProvider from './Provaider/AuthProvider';
+import App from './App';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <AuthProvider>
     <React.StrictMode>
-      <RouterProvider router={router} />
+      <App/>
     </React.StrictMode>
   </AuthProvider>
 
