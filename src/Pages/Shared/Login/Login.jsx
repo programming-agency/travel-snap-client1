@@ -50,10 +50,10 @@ export default function Login() {
                   <h1 className="text-3xl text-white mb-5 font-bold">Please Login</h1>
                   <div className="form-control">
 
-                    <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name='email' placeholder="Email" className="input input-bordered" />
+                    <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name='email' placeholder="Email" className="input input-bordered" required />
                   </div>
                   <div className="form-control">
-                    <input value={pass} onChange={(e) => { setPass(e.target.value) }} type="password" name='password' placeholder="Password" className="input input-bordered" />
+                    <input value={pass} onChange={(e) => { setPass(e.target.value) }} type="password" name='password' placeholder="Password" className="input input-bordered"required />
 
                   </div>
                   <div className="form-control mt-6">

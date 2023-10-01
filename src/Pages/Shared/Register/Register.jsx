@@ -41,20 +41,20 @@ export default function Register() {
                   <label className="label">
                     <span className="label-text">Your User Name</span>
                   </label>
-                  <input type="text" required={true} value={userName} onChange={(e) => { setUserName(e.target.value) }} name='name' placeholder="Enter your username..." className="input input-bordered" />
+                  <input type="text" required={true} value={userName} onChange={(e) => { setUserName(e.target.value) }} name='name' placeholder="Enter your username..." className="input input-bordered" req/>
                 </div>
 
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Email</span>
                   </label>
-                  <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name='email' placeholder="Enter your email..." className="input input-bordered" />
+                  <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name='email' placeholder="Enter your email..." className="input input-bordered" required />
                 </div>
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Photo URL</span>
                   </label>
-                  <input type="text" value={photo} onChange={(e) => { setPhoto(e.target.value) }} name='photo' placeholder="Enter your Photo URL" className="input input-bordered" />
+                  <input type="text" value={photo} onChange={(e) => { setPhoto(e.target.value) }} name='photo' placeholder="Enter your Photo URL" className="input input-bordered" required />
                 </div>
 
                 <div className="form-control">
