@@ -4,7 +4,7 @@ import { FiMapPin, FiMessageSquare } from 'react-icons/fi';
 const Post = () => {
     return (
         <div>
-            <div className="card w-96  bg-white shadow-xl">
+            <div className="card md:w-96 w-full   bg-white shadow-xl">
                 <figure><img className='w-full' src="https://i.ibb.co/XFqXrdg/download.jpg" alt="Shoes" /></figure>
                 <div className="card-body">
                     <h1>date</h1>
@@ -14,7 +14,7 @@ const Post = () => {
                     <p>  Lorem ipsum dolor, sit amet consectetur adipisicing elit. Doloremque, consectetur. </p>
                     <div className="card-actions justify-between">
                         <div className='flex items-center gap-2' > <FiMapPin />Location</div>
-                        <div className="flex items-center gap-2"> <FiMessageSquare />Products</div>
+                        <div className="flex items-center gap-2"> <FiMessageSquare />Comment</div>
                     </div>
                 </div>
             </div>

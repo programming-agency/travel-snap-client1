@@ -1,26 +1,26 @@
-import React, { useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import axios from "axios"
 
 export default function Register() {
   const navigate = useNavigate();
-
   const [userName, setUserName] = useState("")
   const [email, setEmail] = useState("")
+  const [photo, setPhoto] = useState("")
   const [pass, setPass] = useState("")
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const user = { userName, email, pass }
+    const user = { userName, email, photo, pass }
     console.log(user)
     try {
       const data = await axios.post("http://localhost:8908/api/register", user);
       console.log(data)
       if (data.status === 200) {
         // updateUser(data.data.user);
-        setSuccess('successfully login')
+        setSuccess('successfully Register')
         navigate("/login");
       }
     } catch (error) {
@@ -30,7 +30,7 @@ export default function Register() {
 
   return (
     <div className="hero min-h-screen" style={{ backgroundImage: 'url("/4.jpg")' }}>
-      <div className="w-2/4 mx-auto  text-center min-h-screen">
+      <div className="md:w-2/4 w-full mx-auto  text-center min-h-screen">
         <div className="hero-content flex-col lg:flex-row">
 
           <div className="card flex-shrink-0 w-full  shadow-2xl ">
@@ -43,12 +43,20 @@ export default function Register() {
                   </label>
                   <input type="text" required={true} value={userName} onChange={(e) => { setUserName(e.target.value) }} name='name' placeholder="Enter your username..." className="input input-bordered" />
                 </div>
+
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Email</span>
                   </label>
                   <input type="email" value={email} onChange={(e) => { setEmail(e.target.value) }} name='email' placeholder="Enter your email..." className="input input-bordered" />
                 </div>
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Photo URL</span>
+                  </label>
+                  <input type="text" value={photo} onChange={(e) => { setPhoto(e.target.value) }} name='photo' placeholder="Enter your Photo URL" className="input input-bordered" />
+                </div>
+
                 <div className="form-control">
                   <label className="label">
                     <span className="label-text">Password</span>

@@ -44,7 +44,7 @@ const Premium = () => {
 
 
                     <div>
-                        <h2 className='  text-2xl pt-[20px] font-bold text-black leading-[50px]'>Gold</h2>
+                        <h2 className='  text-2xl pt-[20px] font-bold text-black leading-[50px]'>Premium</h2>
                         <p className='text-[Inter] text-black text-[32px] font-bold leading-[50px] '>$120.00 <span className='text-[Inter] leading-6  text-[#767676] text-[15px]'>BD TK</span></p>
 
                         <div className='space-y-5'>
@@ -54,7 +54,7 @@ const Premium = () => {
                             </div>
                             <div className='flex gap-5 items-center'>
                                 <p className=' text-[#FFB400] h-6'> <FaCheck /> </p>
-                                <p className='  text-[15px] capitalize leading-5 '>1 Picture Per Blog</p>
+                                <p className='  text-[15px] capitalize leading-5 '>10 Picture Per Blog</p>
                             </div>
                             <div className='flex gap-5 items-center'>
                                 <p className='text-[#FFB400] h-6'> <FaCheck /> </p>

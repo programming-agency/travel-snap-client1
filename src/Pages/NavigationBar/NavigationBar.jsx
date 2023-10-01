@@ -1,8 +1,18 @@
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 
 export default function NavigationBar() {
 
+    const navigate = useNavigate()
+    const [user, setUser] = useState();
+    console.log(user);
+
+    const handleLogOut = () => {
+        // logOut()
+        localStorage.clear();
+        navigate('/login')
+        // console.log("btn click");
+    }
 
     const navOption =
         <>
@@ -11,10 +21,17 @@ export default function NavigationBar() {
             <li><Link to='/destination'>Destination</Link></li>
             <li><Link to='/contact'>Contact Us</Link></li>
             <li><Link to='/premium'>Premium</Link></li>
-            <li><Link to='/login'>Login</Link></li>
-
-
+            {/* <li><Link to='/login'>Login</Link></li> */}
         </>
+
+
+    useEffect(() => {
+        const user = localStorage.getItem('user');
+        if (!user) return navigate('/login')
+        setUser(JSON.parse(user))
+
+    }, [])
+
     return (
         <div className="navbar fixed z-10 bg-opacity-30 max-w-screen-xl  bg-black text-white">
             <div className="navbar-start">
@@ -35,10 +52,28 @@ export default function NavigationBar() {
                     {navOption}
                 </ul>
             </div>
-            <div className="navbar-end">
-                <div className="form-control">
-                    <input type="text" placeholder="Search" className="input input-bordered w-24 md:w-auto" />
-                </div>
+            <div className="navbar-end gap-2">
+                <Link to="/aboutme">
+                    {
+                        user &&
+                        <div className="avatar">
+                            <div className="w-8 rounded-full">
+                                <img src="https://i.ibb.co/ChxcKCP/Whats-App-Image-2023-09-30-at-03-14-25-b25316a6.jpg" />
+                            </div>
+                        </div>
+                    }
+
+                </Link>
+
+
+                {user ?
+                    <button className='btn btn-primary' onClick={handleLogOut}>Log Out </button>
+                    :
+                    <Link to="/login"><button className='btn btn-primary'>
+                        Login
+                    </button> </Link>
+
+                }
             </div>
         </div>
     )

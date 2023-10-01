@@ -8,9 +8,9 @@ export default function Home() {
     <div>
       <Header />
 
-      <div className='flex px-10'>
+      <div className='md:flex  gap-5 md:px-10 px-5'>
         {/* post section */}
-        <div className='grid md:grid-cols-2 gap-5  w-[75%]'>
+        <div className='grid md:grid-cols-2 gap-5 md:w-[75%] w-full'>
           <Post />
           <Post />
           <Post />
@@ -20,7 +20,7 @@ export default function Home() {
         </div>
 
         {/* about section  */}
-        <div className='w-[25%]'>
+        <div className='md:w-[25%] mt-5 w-full'>
           <Sidebar />
 
         </div>
