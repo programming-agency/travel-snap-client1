@@ -25,7 +25,7 @@ export default function Login() {
         // updateUser(data.data.user);
         localStorage.setItem('user', JSON.stringify(data.data.user));
         setSuccess('successfully login')
-        navigate("/");
+        navigate("/home");
       }
 
 

@@ -5,6 +5,7 @@ export default function NavigationBar() {
 
     const navigate = useNavigate()
     const [user, setUser] = useState();
+
     console.log(user);
 
     const handleLogOut = () => {
@@ -16,7 +17,8 @@ export default function NavigationBar() {
 
     const navOption =
         <>
-            <li><Link to='/'>Home</Link></li>
+            {user && <li><Link to='/home'>Home</Link></li>}
+
             <li><Link to='/about'>About us</Link></li>
             <li><Link to='/destination'>Destination</Link></li>
             <li><Link to='/contact'>Contact Us</Link></li>
@@ -43,7 +45,7 @@ export default function NavigationBar() {
                         {navOption}
                     </ul>
                 </div>
-                <a className="btn btn-ghost normal-case text-xl">Travel Snap</a>
+                <a className="btn btn-ghost normal-case text-xl" href='/'>Travel Snap</a>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -58,7 +60,7 @@ export default function NavigationBar() {
                         user &&
                         <div className="avatar">
                             <div className="w-8 rounded-full">
-                                <img src="https://i.ibb.co/ChxcKCP/Whats-App-Image-2023-09-30-at-03-14-25-b25316a6.jpg" />
+                                <img title={user.userName} src={user?.photo} />
                             </div>
                         </div>
                     }
@@ -67,7 +69,7 @@ export default function NavigationBar() {
 
 
                 {user ?
-                    <button className='btn btn-primary' onClick={handleLogOut}>Log Out </button>
+                    <button className='btn btn-outline' onClick={handleLogOut}>Log Out </button>
                     :
                     <Link to="/login"><button className='btn btn-primary'>
                         Login

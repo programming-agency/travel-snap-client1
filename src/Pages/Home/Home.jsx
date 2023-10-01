@@ -2,11 +2,14 @@ import React from 'react'
 import Header from '../Header/Header'
 import Sidebar from '../../Components/Sidebar/Sidebar'
 import Post from '../../Components/Post/Post'
+import LandingPages from '../LandingPages/LandingPages'
 
 export default function Home() {
   return (
     <div>
       <Header />
+
+      <LandingPages />
 
       <div className='md:flex  gap-5 md:px-10 px-5'>
         {/* post section */}

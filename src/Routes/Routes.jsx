@@ -13,7 +13,8 @@ import Premium from "../Pages/Premium/Premium";
 import Write from "../Pages/write/Write";
 import Payment from "../Pages/Premium/Payment";
 import AboutMe from "../Components/AboutMe/AboutMe";
- 
+import LandingPages from "../Pages/LandingPages/LandingPages";
+
 
 const router = createBrowserRouter([
     {
@@ -21,8 +22,12 @@ const router = createBrowserRouter([
         element: <Main />,
         children: [
             {
-                path: '/',
+                path: '/home',
                 element: <Home />
+            },
+            {
+                path: '/',
+                element: <LandingPages />
             },
             {
                 path: '/about',
