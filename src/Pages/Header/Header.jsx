@@ -20,8 +20,9 @@ const Header = () => {
             <div className="hero-overlay bg-opacity-60"></div>
             <div className="hero-content text-center text-neutral-content">
                 <div className="">
-                    <button onClick={() => navigate('/write')} className="btn px-5 btn-primary">  Write</button>
+
                     <p className="mb-10 text-white text-4xl">"Experiences are the ink in the pen of our life's story."</p>
+                    <button onClick={() => navigate('/write')} className="btn px-5 btn-primary">  Write</button>
 
                 </div>
             </div>

@@ -20,7 +20,7 @@ const AboutMe = () => {
                 <div className="hero-content text-center text-neutral-content">
                     <div className="max-w-md">
                         <h1 className="mb-5 text-5xl font-bold"> About Me </h1>
-                        <Typography variant='h5'>{user.userName}</Typography>
+                        <Typography className='text-center' variant='h5'>{user.userName}</Typography>
 
 
                     </div>
@@ -48,13 +48,6 @@ const AboutMe = () => {
                                 <Box className='border w-[322px] py-3 rounded-md px-3 '>{user.email}</Box>
 
                             </Box>
-                            <Box>
-                                <Box> User Address</Box>
-                                <Box className='border w-[322px] py-3 rounded-md px-3 '>Bagerhat khulna</Box>
-
-                            </Box>
-
-
                         </Box>
                         <Box className="flex justify-center"><Button size='large' variant='contained'>Update</Button></Box>
                     </Box>

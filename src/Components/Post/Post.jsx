@@ -1,22 +1,31 @@
-import React from 'react';
-import { FiMapPin, FiMessageSquare } from 'react-icons/fi';
+import React, { useState } from 'react';
+import { FiMapPin } from 'react-icons/fi';
 import { SERVER_URL } from '../../config/constant';
 
 const Post = ({ post }) => {
+    const [showFullContent, setShowFullContent] = useState(false);
+
+    const toggleContent = () => {
+        setShowFullContent(!showFullContent);
+    };
+
+    const contentToShow = showFullContent ? post.content : post.content.slice(0, 100); // Adjust the slice length as needed
+
     return (
         <div>
-            <div className="card md:w-96 w-full   bg-white shadow-xl">
+            <div className="card w-96 bg-white shadow-xl">
                 <figure><img className='w-full h-[300px]' src={`${SERVER_URL}/${post.image}`} alt="User Post Image" /></figure>
                 <div className="card-body">
+                    <h2 className="card-title">{post?.title}</h2>
                     <h1>{new Date(post?.createdAt).toDateString()}</h1>
-                    <h2 className="card-title">
-                        Post by {post?.userName}
-                    </h2>
-                    <p>{post?.content}</p>
-                    <div className="card-actions justify-between">
-                        <div className='flex items-center gap-2' > <FiMapPin />Location</div>
-                        <div className="flex items-center gap-2"> <FiMessageSquare />Comment</div>
-                    </div>
+                    <p>{post?.userName}</p>
+                    <p>{contentToShow}</p>
+                    {post.content.length > 100 && (
+                        <button className='text-red-500' onClick={toggleContent}>
+                            {showFullContent ? "See Less" : "See More"}
+                        </button>
+                    )}
+                    <div className='flex items-center gap-2'><FiMapPin />{post?.country}</div>
                 </div>
             </div>
         </div>

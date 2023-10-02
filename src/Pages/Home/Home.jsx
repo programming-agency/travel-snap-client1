@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Header from '../Header/Header'
 import Sidebar from '../../Components/Sidebar/Sidebar'
-import Post from '../../Components/Post/Post' 
+import Post from '../../Components/Post/Post'
 import axios from 'axios'
 
 export default function Home() {
