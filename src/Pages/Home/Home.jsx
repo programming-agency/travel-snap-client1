@@ -24,7 +24,7 @@ export default function Home() {
     <div>
       <Header />
 
-      <div className='md:flex flex gap-5 md:px-10 px-5'>
+      <div className='md:flex flex gap-5 pt-10 px-5'>
         {/* post section */}
         <div className='grid md:grid-cols-2 gap-5 md:w-[75%] w-full'>
           {

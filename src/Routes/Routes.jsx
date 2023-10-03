@@ -14,6 +14,7 @@ import Write from "../Pages/write/Write";
 import Payment from "../Pages/Premium/Payment";
 import AboutMe from "../Components/AboutMe/AboutMe";
 import LandingPages from "../Pages/LandingPages/LandingPages";
+import UpdateUserProfile from "../Components/AboutMe/UpdateUserProfile";
 
 
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
             {
                 path: '/aboutme',
                 element: <AboutMe />
+            },
+            {
+                path: '/UpdateUserProfile',
+                element: <UpdateUserProfile />
             },
 
             {

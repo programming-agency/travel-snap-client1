@@ -4,26 +4,47 @@ import TabContext from '@mui/lab/TabContext';
 import TabList from '@mui/lab/TabList';
 import TabPanel from '@mui/lab/TabPanel';
 import { useEffect, useState } from 'react';
-import { FiMapPin, FiMessageSquare } from 'react-icons/fi';
+import { FiMapPin } from 'react-icons/fi';
+import axios from 'axios';
+import { SERVER_URL } from '../../config/constant';
 
 export default function Destination() {
 
     const [countrys, setCountrys] = useState([])
+    const [showFullContent, setShowFullContent] = useState(false);
+
 
     useEffect(() => {
-        fetch('/countryData.json')
-            .then(res => res.json())
-            .then(data => setCountrys(data))
+        const getPosts = async () => {
+            try {
+                const result = await axios("/api/posts");
+                setCountrys(result.data);
+                console.log(result.data);
+            } catch (error) {
+                console.error('Error fetching data:', error);
+            }
+        };
 
-    }, [])
+        getPosts();
+    }, []);
+
+    console.log(countrys);
+
+    const toggleContent = () => {
+        setShowFullContent(!showFullContent);
+    };
 
 
-    const SouthAmerica = countrys.filter(item => item.location === "South America")
-    const Europe = countrys.filter(item => item.location === "Europe")
-    const NorthAmerica = countrys.filter(item => item.location === "North America")
-    const Asia = countrys.filter(item => item.location === "Asia")
-    const Africa = countrys.filter(item => item.location === "Africa")
-
+    const SouthAmerica = countrys.filter(item => item.country === "South America")
+    // console.log(SouthAmerica);
+    const Europe = countrys.filter(item => item.country === "Europe")
+    // console.log(Europe);
+    const NorthAmerica = countrys.filter(item => item.country === "North America")
+    // console.log(NorthAmerica);
+    const Asia = countrys.filter(item => item.country === "Asia")
+    // console.log(Asia);
+    const Africa = countrys.filter(item => item.country === "Africa")
+    // console.log(Africa);
 
     // console.log(SouthAmerica);
 
@@ -60,20 +81,32 @@ export default function Destination() {
                         <div className='grid grid-cols-3 gap-5'>
                             {
                                 SouthAmerica.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
+                                    (
+                                        <div className="card card-compact w-96 bg-white p-3  shadow-xl">
+                                            <div className='flex justify-between'>
+                                                <div>
+                                                    <h2 className="card-title">{country.userName}</h2>
+                                                </div>
+
+
+                                            </div>
+
+                                            <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                            <div className="card-body">
+                                                <h1>{new Date(country?.createdAt).toDateString()}</h1>
+                                                <h2 className="card-title">{country.title}</h2>
+                                                {country.content.length > 100 && (
+                                                    <div>
+                                                        <p>{showFullContent ? country.content : country.content.slice(0, 100)}</p>
+                                                        <button className='text-red-500' onClick={toggleContent}>
+                                                            {showFullContent ? "See Less" : "See More"}
+                                                        </button>
+                                                    </div>
+                                                )}
+                                                <div className='flex items-center gap-2'><FiMapPin />{country?.country}</div>
                                             </div>
                                         </div>
-                                    </div>
+                                    )
                                 ))
                             }
                         </div>
@@ -83,20 +116,34 @@ export default function Destination() {
                         <div className='grid grid-cols-3 gap-5'>
                             {
                                 NorthAmerica.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
+                                    (
+                                        (
+                                            <div className="card card-compact w-96 bg-white p-3  shadow-xl">
+                                                <div className='flex justify-between'>
+                                                    <div>
+                                                        <h2 className="card-title">{country.userName}</h2>
+                                                    </div>
+
+
+                                                </div>
+
+                                                <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                                <div className="card-body">
+                                                    <h1>{new Date(country?.createdAt).toDateString()}</h1>
+                                                    <h2 className="card-title">{country.title}</h2>
+                                                    {country.content.length > 100 && (
+                                                        <div>
+                                                            <p>{showFullContent ? country.content : country.content.slice(0, 100)}</p>
+                                                            <button className='text-red-500' onClick={toggleContent}>
+                                                                {showFullContent ? "See Less" : "See More"}
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                    <div className='flex items-center gap-2'><FiMapPin />{country?.country}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        )
+                                    )
                                 ))
                             }
                         </div>
@@ -105,22 +152,34 @@ export default function Destination() {
                     <TabPanel value="3">
                         {/* Europe  */}
                         <div className='grid grid-cols-3 gap-5'>
+                            {/* ahhhh */}
                             {
                                 Europe.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
+
+                                    ((
+                                        <div className="card card-compact w-96 bg-white p-3  shadow-xl">
+                                            <div className='flex justify-between'>
+                                                <div>
+                                                    <h2 className="card-title">{country.userName}</h2>
+                                                </div>
+                                            </div>
+
+                                            <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                            <div className="card-body">
+                                                <h1>{new Date(country?.createdAt).toDateString()}</h1>
+                                                <h2 className="card-title">{country.title}</h2>
+                                                {country.content.length > 100 && (
+                                                    <div>
+                                                        <p>{showFullContent ? country.content : country.content.slice(0, 100)}</p>
+                                                        <button className='text-red-500' onClick={toggleContent}>
+                                                            {showFullContent ? "See Less" : "See More"}
+                                                        </button>
+                                                    </div>
+                                                )}
+                                                <div className='flex items-center gap-2'><FiMapPin />{country?.country}</div>
                                             </div>
                                         </div>
-                                    </div>
+                                    ))
                                 ))
                             }
                         </div>
@@ -129,48 +188,70 @@ export default function Destination() {
                     <TabPanel value="4">
 
                         <div className='grid grid-cols-3 gap-5'>
-                            {/* Africa */}
+
                             {
-                                Africa.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
+                                Africa.map((country, index) => ((
+                                    (<div className="card card-compact w-96 bg-white p-3  shadow-xl">
+                                        <div className='flex justify-between'>
+                                            <div>
+                                                <h2 className="card-title">{country.userName}</h2>
                                             </div>
                                         </div>
+
+                                        <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                        <div className="card-body">
+                                            <h1>{new Date(country?.createdAt).toDateString()}</h1>
+                                            <h2 className="card-title">{country.title}</h2>
+                                            {country.content.length > 100 && (
+                                                <div>
+                                                    <p>{showFullContent ? country.content : country.content.slice(0, 100)}</p>
+                                                    <button className='text-red-500' onClick={toggleContent}>
+                                                        {showFullContent ? "See Less" : "See More"}
+                                                    </button>
+                                                </div>
+                                            )}
+                                            <div className='flex items-center gap-2'><FiMapPin />{country?.country}</div>
+                                        </div>
                                     </div>
+                                    ))
                                 ))
                             }
                         </div>
 
                     </TabPanel>
                     <TabPanel value="5">
-                        {/* Asia */}
+
 
                         <div className='grid grid-cols-3 gap-5'>
+                            {/* Asia */}
                             {
                                 Asia.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
+                                    (
+                                        (
+                                            <div className="card card-compact w-96 bg-white p-3  shadow-xl">
+                                                <div className='flex justify-between'>
+                                                    <div>
+                                                        <h2 className="card-title">{country.userName}</h2>
+                                                    </div>
+                                                </div>
+
+                                                <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                                <div className="card-body">
+                                                    <h1>{new Date(country?.createdAt).toDateString()}</h1>
+                                                    <h2 className="card-title">{country.title}</h2>
+                                                    {country.content.length > 100 && (
+                                                        <div>
+                                                            <p>{showFullContent ? country.content : country.content.slice(0, 100)}</p>
+                                                            <button className='text-red-500' onClick={toggleContent}>
+                                                                {showFullContent ? "See Less" : "See More"}
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                    <div className='flex items-center gap-2'><FiMapPin />{country?.country}</div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </div>
+                                        )
+                                    )
                                 ))
                             }
                         </div>

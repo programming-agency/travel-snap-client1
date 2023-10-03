@@ -99,7 +99,7 @@ export default function Write() {
                             value={formValues.country}
                         >
                             <MenuItem value={'South America'}>South America</MenuItem>
-                            <MenuItem value={"North AmericaG"}>North America</MenuItem>
+                            <MenuItem value={"North America"}>North America</MenuItem>
                             <MenuItem value={"Europe"}>Europe</MenuItem>
                             <MenuItem value={"Africa"}>Africa</MenuItem>
                             <MenuItem value={"Asia"}>Asia</MenuItem>
