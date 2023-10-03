@@ -4,9 +4,9 @@ import { Box, Button, Paper, TextField } from '@mui/material';
 
 function UpdateUserProfile() {
     const [currentEmail, setCurrentEmail] = useState('');
-    const [newEmail, setNewEmail] = useState('');
+    const [email, setEmail] = useState('');
     const [userName, setUserName] = useState('');
-    const [password, setPassword] = useState('');
+    const [pass, setPass] = useState('');
     const [message, setMessage] = useState('');
 
     const handleFormSubmit = async (e) => {
@@ -14,9 +14,9 @@ function UpdateUserProfile() {
 
         try {
             const response = await axios.put(`/api/user/email/${currentEmail}`, {
-                newEmail,
+                email,
                 userName,
-                password,
+                pass,
             });
 
             if (response.status === 200) {
@@ -58,8 +58,8 @@ function UpdateUserProfile() {
                         <TextField
                             label='New Email'
                             type="email"
-                            value={newEmail}
-                            onChange={(e) => setNewEmail(e.target.value)}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                             required
                         />
                     </Box>
@@ -76,8 +76,8 @@ function UpdateUserProfile() {
                         <TextField
                             type="password"
                             label='Password'
-                            value={password}
-                            onChange={(e) => setPassword(e.target.value)}
+                            value={pass}
+                            onChange={(e) => setPass(e.target.value)}
                             required
                         />
                     </Box>

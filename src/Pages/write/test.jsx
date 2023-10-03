@@ -1,91 +1,94 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField } from "@mui/material";
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Box, Button, Paper, TextField } from '@mui/material';
 
-export default function Write() {
-    const [formValues, setFormValues] = useState({
-        title: "",
-        content: "",
-        country: "",
-        userName: 'Sumaiya jannat',
-    });
+function UpdateUserProfile() {
+    const [currentEmail, setCurrentEmail] = useState('');
+    const [email, setEmail] = useState('');
+    const [userName, setUserName] = useState('');
+    const [pass, setPass] = useState('');
+    const [message, setMessage] = useState('');
 
-    const [file, setFile] = useState(null);
-
-    const handleChange = (e) => {
-        const newFormValues = { ...formValues }; // Create a copy of formValues
-        newFormValues[e.target.name] = e.target.value;
-        setFormValues(newFormValues);
-    }
-
-    const handleFile = async (e) => {
-        setFile(e.target.files[0]);
-        try {
-            const formData = new FormData();
-            formData.append('file', e.target.files[0]);
-            const result = await axios.post('/api/upload', formData);
-            console.log(result);
-            if (result?.data.filePath) {
-                const newFormValues = { ...formValues };
-                newFormValues['image'] = result?.data.filePath;
-                setFormValues(newFormValues);
-            }
-        } catch (error) {
-            alert('Failed to upload');
-        }
-    };
-
-    const handleSubmit = async (e) => {
+    const handleFormSubmit = async (e) => {
         e.preventDefault();
 
-        if (!formValues.title || !formValues.content || !file || !formValues.country) {
-            console.log("Title, content, and file are required.");
-            return;
-        }
-
         try {
-            const data = { ...formValues };
-            console.log(data);
-            const result = await axios.post('/api/posts/create', data);
-            console.log(result);
-            
+            const response = await axios.put(`/api/user/email/${currentEmail}`, {
+                email,
+                userName,
+                pass,
+            });
+
+            if (response.status === 200) {
+                setMessage('Profile updated successfully.');
+            } else if (response.status === 404) {
+                setMessage('User not found.');
+            } else {
+                setMessage('Error updating profile.');
+            }
         } catch (error) {
-            console.error("Error uploading file:", error);
+            console.error('Error:', error);
+            setMessage('An error occurred.');
         }
     };
 
     return (
-        <div className="pt-20">
-            {file && <img className="mx-auto h-[400px] w-[400px]" src={URL.createObjectURL(file)} alt="" />}
-            <form onSubmit={handleSubmit} style={{ display: 'flex', justifyContent: 'center' }}>
-                <Paper style={{ width: '560px', padding: '24px' }} >
-                    <h2 style={{ textAlign: 'center', marginBottom: '16px' }}>Write post</h2>
-                    <TextField id="fileInput" type="file" onChange={handleFile} fullWidth variant="outlined" required />
-                    <TextField onChange={handleChange} name="title" style={{ marginTop: '20px' }} label="Title" fullWidth variant="outlined" required />
-                    <TextField onChange={handleChange} name="content" multiline label="Content" rows={10} id="fileInput" style={{ marginTop: '20px' }} fullWidth variant="outlined" required />
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Country</InputLabel>
-                        <Select
-                            onChange={handleChange}
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            label="Country"
-                            name="country" // Make sure to set the name attribute
-                            value={formValues.country} // Bind the value to formValues.country
-                        >
-                            <MenuItem value={'USA'}>USA</MenuItem>
-                            <MenuItem value={'Canada'}>Canada</MenuItem>
-                            <MenuItem value={'UK'}>UK</MenuItem>
-                            {/* Add more countries as needed */}
-                        </Select>
-                    </FormControl>
+        <div>
+            <div className="hero h-[350px]" style={{ backgroundImage: 'url("/contact.png")' }}>
+                <div className="hero-overlay bg-opacity-60"></div>
+                <div className="hero-content text-center text-neutral-content">
+                    <div className="max-w-md">
+                        <h1 className="mb-5 text-5xl font-bold">Update User Profile</h1>
+                    </div>
+                </div>
+            </div>
+
+            <Paper className='py-10'>
+                <form className='text-center space-y-5' onSubmit={handleFormSubmit}>
                     <Box>
-                        <Button fullWidth variant="contained" style={{ marginTop: '20px' }} type="submit">
-                            Upload
-                        </Button>
+                        <TextField
+                            label='Current Email'
+                            type="email"
+                            value={currentEmail}
+                            onChange={(e) => setCurrentEmail(e.target.value)}
+                            required
+                        />
                     </Box>
-                </Paper>
-            </form>
+                    <Box>
+                        <TextField
+                            label='New Email'
+                            type="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                            required
+                        />
+                    </Box>
+                    <Box>
+                        <TextField
+                            type="text"
+                            label='User Name'
+                            value={userName}
+                            onChange={(e) => setUserName(e.target.value)}
+                            required
+                        />
+                    </Box>
+                    <Box>
+                        <TextField
+                            type="password"
+                            label='Password'
+                            value={pass}
+                            onChange={(e) => setPass(e.target.value)}
+                            required
+                        />
+                    </Box>
+                    <Button href='/login' variant='contained' type="submit">
+                        Update Profile
+                    </Button>
+                    <Box className='text-success'>{message}</Box>
+                </form>
+            </Paper>
         </div>
     );
 }
+
+export default UpdateUserProfile;

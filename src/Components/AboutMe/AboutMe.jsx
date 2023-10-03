@@ -10,7 +10,10 @@ const AboutMe = () => {
 
     useEffect(() => {
         // Fetch user profile data from your API endpoint
-        axios.get('/api/user/email/hasheubur@gmail.com') // Replace with your API endpoint
+        const user = JSON.parse(localStorage.getItem('user'))
+        console.log(user);
+
+        axios.get(`/api/user/email/${user.email}`) // Replace with your API endpoint
             .then((response) => {
                 // Set the user data in the state when the data is fetched successfully
                 setUser(response.data);

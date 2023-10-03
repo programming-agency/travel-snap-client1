@@ -21,11 +21,19 @@ const MyPost = () => {
         getPosts();
     }, []);
 
-    const handleDelete = _id => {
-      
-        console.log(_id);
-    }
 
+    // delete option 
+    const handleDelete = async (_id) => {
+        try {
+            // Send a DELETE request to your server to delete the post with the given _id
+            await axios.delete(`/api/posts/${_id}`);
+
+            // Remove the deleted post from the state
+            setMyPosts((prevPosts) => prevPosts.filter((post) => post._id !== _id));
+        } catch (error) {
+            console.error('Error deleting post:', error);
+        }
+    };
 
 
     // see more button
