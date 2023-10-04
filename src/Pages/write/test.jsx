@@ -1,94 +1,86 @@
-import React, { useState } from 'react';
 import axios from 'axios';
-import { Box, Button, Paper, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { FiMapPin, FiMessageSquare } from 'react-icons/fi';
+import { SERVER_URL } from '../../config/constant';
 
-function UpdateUserProfile() {
-    const [currentEmail, setCurrentEmail] = useState('');
-    const [email, setEmail] = useState('');
-    const [userName, setUserName] = useState('');
-    const [pass, setPass] = useState('');
-    const [message, setMessage] = useState('');
 
-    const handleFormSubmit = async (e) => {
-        e.preventDefault();
+const MyPost = () => {
+    const [myPosts, setMyPosts] = useState([]);
+    const [showFullContent, setShowFullContent] = useState(false);
 
-        try {
-            const response = await axios.put(`/api/user/email/${currentEmail}`, {
-                email,
-                userName,
-                pass,
-            });
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        console.log(user);
 
-            if (response.status === 200) {
-                setMessage('Profile updated successfully.');
-            } else if (response.status === 404) {
-                setMessage('User not found.');
-            } else {
-                setMessage('Error updating profile.');
+        const getPosts = async () => {
+            try {
+                const result = await axios.get(`/api/posts/username/${user.userName}`); // Corrected Axios request
+                setMyPosts(result.data);
+            } catch (error) {
+                console.error('Error fetching posts:', error); // Handle errors
             }
+        };
+
+        getPosts();
+    }, []);
+
+    console.log(myPosts);
+    // delete option 
+    const handleDelete = async (_id) => {
+        try {
+            // Send a DELETE request to your server to delete the post with the given _id
+            await axios.delete(`/api/posts/${_id}`);
+
+            // Remove the deleted post from the state
+            setMyPosts((prevPosts) => prevPosts.filter((post) => post._id !== _id));
         } catch (error) {
-            console.error('Error:', error);
-            setMessage('An error occurred.');
+            console.error('Error deleting post:', error);
         }
     };
+    // see more button
+    const toggleContent = () => {
+        setShowFullContent(!showFullContent);
+    };
+
 
     return (
-        <div>
-            <div className="hero h-[350px]" style={{ backgroundImage: 'url("/contact.png")' }}>
-                <div className="hero-overlay bg-opacity-60"></div>
-                <div className="hero-content text-center text-neutral-content">
-                    <div className="max-w-md">
-                        <h1 className="mb-5 text-5xl font-bold">Update User Profile</h1>
-                    </div>
-                </div>
-            </div>
+        <div className='grid grid-cols-3 gap-5' >
+            {
+                myPosts.map((post, index) => (
+                    (
+                        <div key={post._id} className="card card-compact w-96 bg-white p-3  shadow-xl">
+                            <div className='flex justify-between'>
+                                <div>
+                                    <h2 className="card-title">{post.userName}</h2>
+                                </div>
 
-            <Paper className='py-10'>
-                <form className='text-center space-y-5' onSubmit={handleFormSubmit}>
-                    <Box>
-                        <TextField
-                            label='Current Email'
-                            type="email"
-                            value={currentEmail}
-                            onChange={(e) => setCurrentEmail(e.target.value)}
-                            required
-                        />
-                    </Box>
-                    <Box>
-                        <TextField
-                            label='New Email'
-                            type="email"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
-                        />
-                    </Box>
-                    <Box>
-                        <TextField
-                            type="text"
-                            label='User Name'
-                            value={userName}
-                            onChange={(e) => setUserName(e.target.value)}
-                            required
-                        />
-                    </Box>
-                    <Box>
-                        <TextField
-                            type="password"
-                            label='Password'
-                            value={pass}
-                            onChange={(e) => setPass(e.target.value)}
-                            required
-                        />
-                    </Box>
-                    <Button href='/login' variant='contained' type="submit">
-                        Update Profile
-                    </Button>
-                    <Box className='text-success'>{message}</Box>
-                </form>
-            </Paper>
+                                <div>
+                                    <button onClick={() => handleDelete(post._id)}> X</button>
+                                </div>
+                            </div>
+
+                            <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${post.image}`} alt="User Post Images" /></figure>
+                            <div className="card-body">
+                                <h1>{new Date(post?.createdAt).toDateString()}</h1>
+                                <h2 className="card-title">{post.title}</h2>
+                                {post.content.length > 100 && (
+                                    <div>
+                                        <p>{showFullContent ? post.content : post.content.slice(0, 100)}</p>
+                                        <button className='text-red-500' onClick={toggleContent}>
+                                            {showFullContent ? "See Less" : "See More"}
+                                        </button>
+
+                                    </div>
+                                )}
+
+                                <div className='flex items-center gap-2'><FiMapPin />{post?.country}</div>
+                            </div>
+                        </div>
+                    )
+                ))
+            }
         </div>
     );
-}
+};
 
-export default UpdateUserProfile;
+export default MyPost;

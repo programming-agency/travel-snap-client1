@@ -63,7 +63,6 @@ export default function Write() {
         }
 
         try {
-
             const data = { ...formValues };
             console.log(data);
             const result = await axios.post('/api/posts/create', data)

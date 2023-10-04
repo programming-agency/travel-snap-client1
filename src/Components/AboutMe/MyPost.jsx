@@ -9,18 +9,31 @@ const MyPost = () => {
     const [showFullContent, setShowFullContent] = useState(false);
 
     useEffect(() => {
-        const getPosts = async () => {
-            try {
-                const result = await axios.get('/api/posts/username/Sumaiya%20Jannati'); // Corrected Axios request
-                setMyPosts(result.data);
-            } catch (error) {
-                console.error('Error fetching posts:', error); // Handle errors
-            }
-        };
+        // Retrieve the user object from localStorage
+        const user = JSON.parse(localStorage.getItem('user'));
 
-        getPosts();
+        // Ensure user object and username exist
+        if (user && user.userName) {
+            const getPosts = async () => {
+                try {
+                    // Fetch all posts
+                    const response = await axios.get('/api/posts');
+
+                    // Filter posts to show only the ones authored by the logged-in user
+                    const filteredPosts = response.data.filter(post => post.userName === user.userName);
+
+                    setMyPosts(filteredPosts);
+                } catch (error) {
+                    console.error('Error fetching posts:', error);
+                    // Handle errors appropriately
+                }
+            };
+
+            getPosts();
+        }
     }, []);
 
+    console.log(myPosts);
 
     // delete option 
     const handleDelete = async (_id) => {
@@ -34,8 +47,6 @@ const MyPost = () => {
             console.error('Error deleting post:', error);
         }
     };
-
-
     // see more button
     const toggleContent = () => {
         setShowFullContent(!showFullContent);
@@ -47,7 +58,7 @@ const MyPost = () => {
             {
                 myPosts.map((post, index) => (
                     (
-                        <div className="card card-compact w-96 bg-white p-3  shadow-xl">
+                        <div key={post._id} className="card card-compact w-96 bg-white p-3  shadow-xl">
                             <div className='flex justify-between'>
                                 <div>
                                     <h2 className="card-title">{post.userName}</h2>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { Box, Button, Paper, TextField } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 function UpdateUserProfile() {
     const [currentEmail, setCurrentEmail] = useState('');
@@ -9,6 +10,7 @@ function UpdateUserProfile() {
     const [pass, setPass] = useState('');
     const [message, setMessage] = useState('');
 
+    const navigate = useNavigate();
     const handleFormSubmit = async (e) => {
         e.preventDefault();
 
@@ -21,6 +23,8 @@ function UpdateUserProfile() {
 
             if (response.status === 200) {
                 setMessage('Profile updated successfully.');
+                // Navigate to the login page upon successful update
+                navigate('/login'); // Replace with your actual login route
             } else if (response.status === 404) {
                 setMessage('User not found.');
             } else {

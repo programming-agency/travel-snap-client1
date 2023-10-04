@@ -18,9 +18,11 @@ export default function Sidebar() {
                 alt=""
             />
             <h1 className='text-xl text-center text-black py-5'>{user.userName}</h1>
-            <Button variant="contained" href="/aboutme">
-                My Profile
-            </Button>
+            <div className='flex justify-center' >
+                <Button variant="contained" href="/aboutme">
+                    My Profile
+                </Button>
+            </div>
         </div>
     )
 }

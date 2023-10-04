@@ -11,7 +11,7 @@ const AboutMe = () => {
     useEffect(() => {
         // Fetch user profile data from your API endpoint
         const user = JSON.parse(localStorage.getItem('user'))
-        console.log(user);
+        // console.log(user);
 
         axios.get(`/api/user/email/${user.email}`) // Replace with your API endpoint
             .then((response) => {
@@ -24,7 +24,7 @@ const AboutMe = () => {
             });
     }, []);
 
-    console.log(user.userName);
+    // console.log(user.userName);
 
     return (
 
@@ -50,7 +50,7 @@ const AboutMe = () => {
                         <Paper className='space-y-3 p-10'>
                             <img className='rounded-full h-[300px] w-[300px]' title={user.userName} src={user.photo} alt="" />
 
-                            <Typography variant='h5'>{user.userName}</Typography>
+                            <Typography align='center' variant='h5'>{user.userName}</Typography>
                         </Paper>
                         <Box>
                             <Box className="flex-col flex gap-5 p-5" >

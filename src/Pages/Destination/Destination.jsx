@@ -19,7 +19,7 @@ export default function Destination() {
             try {
                 const result = await axios("/api/posts");
                 setCountrys(result.data);
-                console.log(result.data);
+                // console.log(result.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -28,7 +28,7 @@ export default function Destination() {
         getPosts();
     }, []);
 
-    console.log(countrys);
+    // console.log(countrys);
 
     const toggleContent = () => {
         setShowFullContent(!showFullContent);
