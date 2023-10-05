@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { CardElement, useStripe, useElements } from '@stripe/react-stripe-js';
+import axios from 'axios';
+import { getUserEmail } from '../../Components/function/getUserEmail';
 
 
 function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
     const [paymentSuccess, setPaymentSuccess] = useState(false);
-
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -27,6 +28,19 @@ function PaymentForm() {
                 // Payment successful
                 setPaymentSuccess(true);
                 console.log(result.paymentMethod);
+
+                try {
+                    const userEmail = await getUserEmail()
+                    console.log(userEmail);
+                    const response = await axios.put(`/api/user/email/${userEmail}`, {
+                        userType: "PREMIUM",
+                        paymentID: result.paymentMethod.id
+
+                    });
+
+                } catch (error) {
+
+                }
             }
         } catch (error) {
             // Handle payment error, e.g., display an error message

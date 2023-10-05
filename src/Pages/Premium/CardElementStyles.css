@@ -1,0 +1,35 @@
+/* CardElementStyles.css */
+
+/* Target the CardElement container */
+.StripeElement {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+  }
+  
+  /* Target the input field for the card number */
+  .StripeElement .InputElement {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  /* Target the input field for the card expiration date */
+  .StripeElement .InputElement--cardExpiry {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  /* Target the input field for the card CVC */
+  .StripeElement .InputElement--cardCvc {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  /* Target the error messages */
+  .StripeElement .StripeElement--invalid {
+    border-color: #ff3860;
+  }
+  
