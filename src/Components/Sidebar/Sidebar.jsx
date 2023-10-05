@@ -8,6 +8,7 @@ export default function Sidebar() {
     useEffect(() => {
         const user = localStorage.getItem('user');
         setUser(JSON.parse(user))
+        // const email = user.email
 
     }, [])
     return (

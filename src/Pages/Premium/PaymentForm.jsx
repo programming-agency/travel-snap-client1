@@ -27,7 +27,7 @@ function PaymentForm() {
             if (result.paymentMethod) {
                 // Payment successful
                 setPaymentSuccess(true);
-                console.log(result.paymentMethod);
+                // console.log(result.paymentMethod);
 
                 try {
                     const userEmail = await getUserEmail()

@@ -5,12 +5,14 @@ import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, TextFiel
 
 export default function Write() {
 
+    const [error, setError] = useState()
 
     const [formValues, setFormValues] = useState({
         title: "",
         content: "",
         country: "",
         userName: "",
+        email: "",
     });
 
     const [file, setFile] = useState(null);
@@ -23,6 +25,7 @@ export default function Write() {
             setFormValues((prevFormValues) => ({
                 ...prevFormValues,
                 userName: parsedUser.userName,
+                email: parsedUser.email,
             }));
         }
     }, []);
@@ -70,6 +73,7 @@ export default function Write() {
 
         } catch (error) {
             console.error("Error uploading file:", error);
+            setError(error.response.data.message)
         }
     };
 
@@ -108,6 +112,7 @@ export default function Write() {
                         <Button fullWidth variant="contained" style={{ marginTop: '20px' }} type="submit">
                             Upload
                         </Button>
+                        <Box className='text-red-600 text-center'> {error}</Box>
                     </Box>
                 </Paper>
             </form>
