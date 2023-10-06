@@ -69,7 +69,18 @@ const MyPost = () => {
                                 </div>
                             </div>
 
-                            <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${post.image}`} alt="User Post Images" /></figure>
+                            <div>
+                                <div className="w-full carousel rounded-box">
+                                    {
+                                        post.images.map((image, index) => (
+                                            <div className="carousel-item w-full">
+                                                <img className='w-full h-[300px]' src={`${SERVER_URL}/${image}`} alt="User Post Images" />
+                                            </div>
+                                        ))
+                                    }
+
+                                </div>
+                            </div>
                             <div className="card-body">
                                 <h1>{new Date(post?.createdAt).toDateString()}</h1>
                                 <h2 className="card-title">{post.title}</h2>

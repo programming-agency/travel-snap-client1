@@ -1,192 +1,169 @@
-import Box from '@mui/material/Box';
-import Tab from '@mui/material/Tab';
-import TabContext from '@mui/lab/TabContext';
-import TabList from '@mui/lab/TabList';
-import TabPanel from '@mui/lab/TabPanel';
-import { useEffect, useState } from 'react';
-import { FiMapPin, FiMessageSquare } from 'react-icons/fi';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField } from "@mui/material";
 
-export default function Destination() {
 
-    const [countrys, setCountrys] = useState([])
+export default function Write() {
+
+    const [error, setError] = useState()
+
+    const [formValues, setFormValues] = useState({
+        title: "",
+        content: "",
+        country: "",
+        userName: "",
+        email: "",
+    });
+
+    const [file, setFile] = useState(null);
 
     useEffect(() => {
-        const getPosts = async () => {
-            try {
-                const result = await axios('/api/posts')
-                setCountrys(result.data)
-                console.log(result.data);
-            } catch (error) {
+        const userData = localStorage.getItem('user');
+        const parsedUser = JSON.parse(userData);
 
-            }
+        if (parsedUser && parsedUser.userName) {
+            setFormValues((prevFormValues) => ({
+                ...prevFormValues,
+                userName: parsedUser.userName,
+                email: parsedUser.email,
+            }));
+        }
+    }, []);
+
+    const handleChange = (e) => {
+        const newFormValues = { ...formValues };;
+        newFormValues[e.target.name] = e.target.value;
+        setFormValues(newFormValues)
+    }
+
+    // const handleFile = async (e) => {
+    //     setFile(e.target.files[0]);
+    //     try {
+    //         const formData = new FormData()
+    //         formData.append('file', e.target.files[0])
+    //         const result = await axios.post('/api/upload', formData)
+    //         console.log(result);
+    //         if (result?.data.filePath) {
+    //             // alert('Uploaded')
+    //             const newFormValues = { ...formValues };
+    //             newFormValues['image'] = result?.data.filePath;
+    //             setFormValues(newFormValues)
+
+    //             // document.getElementById('fileInput').value = '';
+
+    //         }
+    //     } catch (error) {
+    //         alert('Failed to upload')
+    //     }
+    // };
+
+    const handleFile = async (e) => {
+        const files = e.target.files;
+
+        if (files.length !== 3) {
+            alert('Please select exactly three image files.');
+            return;
         }
 
-        getPosts()
-    }, [])
+        const formData = new FormData();
+
+        for (let i = 0; i < 3; i++) {
+            formData.append(`image${i + 1}`, files[i]);
+        }
+
+        try {
+            const result = await axios.post('/api/upload', formData);
+            console.log(result);
+            if (result?.data.filePaths) {
+                const newFormValues = { ...formValues };
+                newFormValues['image1'] = result?.data.filePaths[0];
+                newFormValues['image2'] = result?.data.filePaths[1];
+                newFormValues['image3'] = result?.data.filePaths[2];
+                setFormValues(newFormValues);
+            }
+        } catch (error) {
+            alert('Failed to upload');
+        }
+    };
 
 
 
-    const SouthAmerica = countrys.filter(item => item.country === "South America")
-    const Europe = countrys.filter(item => item.country === "Europe")
-    const NorthAmerica = countrys.filter(item => item.country === "North America")
-    const Asia = countrys.filter(item => item.country === "Asia")
-    const Africa = countrys.filter(item => item.country === "Africa")
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        if (!formValues.title || !formValues.content || !file || !formValues.country) {
+            console.log("Title, content, and file are required.");
+            return;
+        }
+
+        try {
+            const data = { ...formValues };
+            console.log(data);
+            const result = await axios.post('/api/posts/create', data)
+            console.log(result);
+
+        } catch (error) {
+            console.error("Error uploading file:", error);
+            setError(error.response.data.message)
+        }
+    };
 
 
-    // console.log(SouthAmerica);
 
-    const [value, setValue] = useState('1');
-
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    }
     return (
-        <div>
-            {/* destination banner */}
-            <div className="hero h-[440px]" style={{ backgroundImage: 'url("/destintion.png")' }}>
-                <div className="hero-overlay bg-opacity-60"></div>
-                <div className="hero-content text-center text-neutral-content">
-                    <div className="max-w-md">
-                        <h1 className="mb-5 text-5xl font-bold"> Destination</h1>
-                    </div>
-                </div>
-            </div>
+        <div className="pt-20">
+            {file && <img className="mx-auto h-[400px] w-[400px]" src={URL.createObjectURL(file)} alt="" />}
+            <form onSubmit={handleSubmit} style={{ display: 'flex', justifyContent: 'center' }}>
+                <Paper style={{ width: '560px', padding: '24px' }} >
 
-            <Box>
-                <TabContext value={value}>
-                    <Box className='flex justify-center' sx={{ borderBottom: 1, borderColor: 'divider' }}>
-                        <TabList onChange={handleChange} aria-label="lab API tabs example">
-                            <Tab label="South America" value="1" />
-                            <Tab label="North America" value="2" />
-                            <Tab label="Europe" value="3" />
-                            <Tab label="Africa" value="4" />
-                            <Tab label="Asia" value="5" />
-                        </TabList>
+                    <h2 style={{ textAlign: 'center', marginBottom: '16px' }}>Write post</h2>
+
+                    {/* <TextField id="fileInput" type="file" onChange={handleFile} fullWidth variant="outlined" required /> */}
+
+                    <TextField
+                        id="fileInput"
+                        type="file"
+                        inputProps={{ multiple: true }} // Allow multiple file selection
+                        onChange={handleFile}
+                        fullWidth
+                        variant="outlined"
+                        required
+                    />
+
+                    <TextField onChange={handleChange} name="title" style={{ marginTop: '20px' }} label="Title" fullWidth variant="outlined" required />
+                    <TextField onChange={handleChange} name="content" multiline label="Content" rows={10} id="fileInput" style={{ marginTop: '20px', marginBottom: '20px' }} fullWidth variant="outlined" required />
+
+                    <FormControl className="pt-10" fullWidth>
+                        <InputLabel
+                            id="demo-simple-select-label">Country</InputLabel>
+                        <Select
+                            onChange={handleChange}
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            label="Country"
+                            name="country" // Make sure to set the name attribute
+                            value={formValues.country}
+                        >
+                            <MenuItem value={'South America'}>South America</MenuItem>
+                            <MenuItem value={"North America"}>North America</MenuItem>
+                            <MenuItem value={"Europe"}>Europe</MenuItem>
+                            <MenuItem value={"Africa"}>Africa</MenuItem>
+                            <MenuItem value={"Asia"}>Asia</MenuItem>
+                        </Select>
+                    </FormControl>
+                    <Box >
+                        <Button fullWidth variant="contained" style={{ marginTop: '20px' }} type="submit">
+                            Upload
+                        </Button>
+                        <Box className='text-red-600 text-center'> {error}</Box>
                     </Box>
-                    <TabPanel value="1">
-                        {/* SouthAmerica */}
-                        <div className='grid grid-cols-3 gap-5'>
-                            {
-                                SouthAmerica.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </TabPanel>
-                    <TabPanel value="2">
-                        {/* NorthAmerica */}
-                        <div className='grid grid-cols-3 gap-5'>
-                            {
-                                NorthAmerica.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-
-                    </TabPanel>
-                    <TabPanel value="3">
-                        {/* Europe  */}
-                        <div className='grid grid-cols-3 gap-5'>
-                            {
-                                Europe.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-
-                    </TabPanel>
-                    <TabPanel value="4">
-
-                        <div className='grid grid-cols-3 gap-5'>
-                            {/* Africa */}
-                            {
-                                Africa.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-
-                    </TabPanel>
-                    <TabPanel value="5">
-                        {/* Asia */}
-
-                        <div className='grid grid-cols-3 gap-5'>
-                            {
-                                Asia.map((country, index) => (
-                                    <div className="card md:w-96 w-full   bg-white shadow-xl">
-                                        <figure>< img className='w-full h-[250px]' src={country.image} alt="Shoes" /></figure>
-                                        <div className="card-body">
-                                            <h1>{country.date}</h1>
-                                            <h2 className="card-title">
-                                                {country.location}
-                                            </h2>
-                                            <p>  {country.title} </p>
-                                            <div className="card-actions justify-between">
-                                                <div className='flex items-center gap-2' > <FiMapPin />{country.location}</div>
-                                                <div className="flex items-center gap-2"> <FiMessageSquare />{country.views}</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                ))
-                            }
-                        </div>
-                    </TabPanel>
-                </TabContext>
-            </Box>
-
+                </Paper>
+            </form>
         </div>
-    )
+    );
 }
+
+
+
+
+

@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaCheck, } from 'react-icons/fa';
 import { FiX } from "react-icons/fi";
 import { useNavigate } from 'react-router-dom';
 
 const Premium = () => {
     const navigate = useNavigate();
+    const [userType, setUserType] = useState()
+
+    useEffect(() => {
+        const user = JSON.parse(localStorage.getItem('user'))
+        setUserType(user.userType);
+    }, [])
+
+    console.log(userType);
+
     return (
         <div className='pt-32 px-44'>
 
@@ -39,7 +48,7 @@ const Premium = () => {
 
                     <button className='font-bold mt-10 mb-5   text-sm text-[#2B2B2B] rounded-[30px] shadow-2xl px-10 py-[10px]'> Free</button>
                 </div>
-                {/* gold */}
+                {/* PREMIUM */}
                 <div className='text-center w-2/4 px-[33px] shadow-lg rounded-lg  bg-[#FFFFFF]'>
 
 
@@ -66,8 +75,28 @@ const Premium = () => {
                                 <p className='  text-[15px] capitalize leading-5'>seo optimization</p>
                             </div>
                         </div>
+                        {userType === 'PREMIUM' ? (
+                            <button
+                                className='font-bold mt-10 text-sm text-[#2B2B2B] rounded-[30px] bg-[#FFB400]   shadow-2xl px-10 py-[10px]'
+                                disabled
+                            >
+                                Already  Purchased
+                            </button>
+                        ) : (
+                            <button
+                                onClick={() => navigate('/payment')}
+                                className='font-bold mt-10 text-sm text-[#2B2B2B] rounded-[30px] bg-[#FFB400] shadow-2xl px-10 py-[10px]'
+                            >
+                                Buy NOW
+                            </button>
+                        )}
 
-                        <button onClick={() => navigate('/payment')} className='font-bold mt-10   text-sm text-[#2B2B2B] rounded-[30px] bg-[#FFB400] shadow-2xl  px-10 py-[10px]'> Buy  NOW</button>
+
+
+
+
+
+
 
                     </div>
                 </div>

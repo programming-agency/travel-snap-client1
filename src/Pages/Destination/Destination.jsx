@@ -91,7 +91,18 @@ export default function Destination() {
 
                                             </div>
 
-                                            <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                            <div>
+                                                <div className="w-full carousel rounded-box">
+                                                    {
+                                                        country.images.map((image, index) => (
+                                                            <div className="carousel-item w-full">
+                                                                <img className='w-full h-[300px]' src={`${SERVER_URL}/${image}`} alt="User Post Images" />
+                                                            </div>
+                                                        ))
+                                                    }
+
+                                                </div>
+                                            </div>
                                             <div className="card-body">
                                                 <h1>{new Date(country?.createdAt).toDateString()}</h1>
                                                 <h2 className="card-title">{country.title}</h2>
@@ -126,8 +137,18 @@ export default function Destination() {
 
 
                                                 </div>
+                                                <div>
+                                                    <div className="w-full carousel rounded-box">
+                                                        {
+                                                            country.images.map((image, index) => (
+                                                                <div className="carousel-item w-full">
+                                                                    <img className='w-full h-[300px]' src={`${SERVER_URL}/${image}`} alt="User Post Images" />
+                                                                </div>
+                                                            ))
+                                                        }
 
-                                                <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                                    </div>
+                                                </div>
                                                 <div className="card-body">
                                                     <h1>{new Date(country?.createdAt).toDateString()}</h1>
                                                     <h2 className="card-title">{country.title}</h2>
@@ -164,7 +185,18 @@ export default function Destination() {
                                                 </div>
                                             </div>
 
-                                            <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                            <div>
+                                                <div className="w-full carousel rounded-box">
+                                                    {
+                                                        country.images.map((image, index) => (
+                                                            <div className="carousel-item w-full">
+                                                                <img className='w-full h-[300px]' src={`${SERVER_URL}/${image}`} alt="User Post Images" />
+                                                            </div>
+                                                        ))
+                                                    }
+
+                                                </div>
+                                            </div>
                                             <div className="card-body">
                                                 <h1>{new Date(country?.createdAt).toDateString()}</h1>
                                                 <h2 className="card-title">{country.title}</h2>
@@ -198,7 +230,18 @@ export default function Destination() {
                                             </div>
                                         </div>
 
-                                        <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                        <div>
+                                            <div className="w-full carousel rounded-box">
+                                                {
+                                                    country.images.map((image, index) => (
+                                                        <div className="carousel-item w-full">
+                                                            <img className='w-full h-[300px]' src={`${SERVER_URL}/${image}`} alt="User Post Images" />
+                                                        </div>
+                                                    ))
+                                                }
+
+                                            </div>
+                                        </div>
                                         <div className="card-body">
                                             <h1>{new Date(country?.createdAt).toDateString()}</h1>
                                             <h2 className="card-title">{country.title}</h2>
@@ -235,7 +278,18 @@ export default function Destination() {
                                                     </div>
                                                 </div>
 
-                                                <figure><img className='w-full h-[200px]' src={`${SERVER_URL}/${country.image}`} alt="User Post Images" /></figure>
+                                                <div>
+                                                    <div className="w-full carousel rounded-box">
+                                                        {
+                                                            country.images.map((image, index) => (
+                                                                <div className="carousel-item w-full">
+                                                                    <img className='w-full h-[300px]' src={`${SERVER_URL}/${image}`} alt="User Post Images" />
+                                                                </div>
+                                                            ))
+                                                        }
+
+                                                    </div>
+                                                </div>
                                                 <div className="card-body">
                                                     <h1>{new Date(country?.createdAt).toDateString()}</h1>
                                                     <h2 className="card-title">{country.title}</h2>
