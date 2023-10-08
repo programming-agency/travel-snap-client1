@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Box, Button, FormControl, InputLabel, MenuItem, Paper, Select, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 export default function Write() {
 
+    const navigate = useNavigate();
     const [error, setError] = useState()
     const [images, setImages] = useState([]);
     const [user, setUser] = useState([])
@@ -16,6 +18,7 @@ export default function Write() {
         country: "",
         userName: "",
         email: "",
+        userType: "",
     });
 
     const [file, setFile] = useState([
@@ -32,6 +35,7 @@ export default function Write() {
                 ...prevFormValues,
                 userName: parsedUser.userName,
                 email: parsedUser.email,
+                userType: parsedUser.userType,
             }));
         }
     }, []);
@@ -77,6 +81,7 @@ export default function Write() {
 
         if (!formValues.title || !formValues.content || images.length < 1 || !formValues.country) {
             console.log("Title, content, and images are required.");
+
             return;
         }
 
@@ -84,6 +89,7 @@ export default function Write() {
             const data = { ...formValues, images };
             console.log(data);
             const result = await axios.post('/api/posts/create', data)
+            navigate('/home')
             console.log(result);
 
         } catch (error) {

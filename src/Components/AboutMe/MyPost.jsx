@@ -33,7 +33,7 @@ const MyPost = () => {
         }
     }, []);
 
-    console.log(myPosts);
+    // console.log(myPosts);
 
     // delete option 
     const handleDelete = async (_id) => {

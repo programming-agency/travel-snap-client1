@@ -1,14 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FiMapPin } from 'react-icons/fi';
+import { FcApproval } from "react-icons/fc";
 import { SERVER_URL } from '../../config/constant';
 
 const Post = ({ post }) => {
     const [showFullContent, setShowFullContent] = useState(false);
+    // const [user, setUser] = useState([])
 
     const toggleContent = () => {
         setShowFullContent(!showFullContent);
     };
 
+    
+    // console.log(post.userType);
+    
     // Adjust the slice length as needed
 
     return (
@@ -23,11 +28,21 @@ const Post = ({ post }) => {
                                 </div>
                             ))
                         }
-
                     </div>
                 </div>
-                <div className="card-body">
-                    <h2 className="card-title">{post?.title}</h2>
+
+                <div className="card-body">                    
+                    <div>
+                        {post.userType === 'PREMIUM' ? (
+                            <div className='flex'>
+                                <p>{post.title}</p>
+                                <p><FcApproval className='text-[30px]' /></p>
+                            </div>
+                        ) : (
+                            <p>{post.title}</p>
+                        )}
+                    </div>
+
                     <h1>{new Date(post?.createdAt).toDateString()}</h1>
                     <p>{post?.userName}</p>
 
